@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Form</title>
+    <style>
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        h2{
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .bt1{
+            margin-left: 50px;
+            background-color: #c7c3c3 ;
+            cursor: pointer;
+            color: black;
+            font-size: 17px;
+        }
+
+        .bt1:hover{
+            background-color: orange;
+        }
+
+        .bt2{
+            margin-left: 1250px;
+            background-color: #c7c3c3 ;
+            cursor: pointer;
+            color: black;
+            font-size: 17px;
+        }
+
+        .bt2:hover{
+            background-color: orange;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            button {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Deceased Owner/Annuitant Information</h2>
+
+    <div class="form-container">
+        <form id="crudForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" required>
+
+            <label for="middleName">Middle Name:</label>
+            <input type="text" id="middleName">
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" required>
+
+            <label for="legalResidence">Legal Residence:</label>
+            <input type="text" id="legalResidence" required>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" required>
+
+            <label for="state">State:</label>
+            <input type="text" id="state" required>
+
+            <label for="zip">ZIP:</label>
+            <input type="text" id="zip" required>
+
+            <label for="maritalStatus">Marital Status:</label>
+            <select id="maritalStatus">
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="divorced">Divorced</option>
+            </select>
+
+            <button type="submit" onclick="createRecord()">Create</button>
+        </form>
+    </div>
+
+    <script>
+        function createRecord() {
+            const firstName = document.getElementById('firstName').value;
+            const middleName = document.getElementById('middleName').value;
+            const lastName = document.getElementById('lastName').value;
+            const legalResidence = document.getElementById('legalResidence').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const zip = document.getElementById('zip').value;
+            const maritalStatus = document.getElementById('maritalStatus').value;
+
+            const record = {
+                firstName,
+                middleName,
+                lastName,
+                legalResidence,
+                city,
+                state,
+                zip,
+                maritalStatus
+            };
+
+            saveRecord(record);
+
+            // Clear the form
+            document.getElementById('firstName').value = '';
+            document.getElementById('middleName').value = '';
+            document.getElementById('lastName').value = '';
+            document.getElementById('legalResidence').value = '';
+            document.getElementById('city').value = '';
+            document.getElementById('state').value = '';
+            document.getElementById('zip').value = '';
+            document.getElementById('maritalStatus').value = '';
+
+            window.location.href = 'display.html';
+        }
+
+        function saveRecord(record) {
+            let records = JSON.parse(localStorage.getItem('records')) || [];
+            records.push(record);
+            localStorage.setItem('records', JSON.stringify(records));
+        }
+    </script>
+        <a href="./First.html"><button class="bt1">Previous</button></a>
+        <a href="./display.html"><button class="bt2">Next</button></a>
+</body>
+</html>

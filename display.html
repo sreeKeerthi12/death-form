@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        h2{
+            text-align: center;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button {
+            background-color: #c7c3c3;
+            color: black;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .pre{
+            background-color: #c7c3c3 ;
+            cursor: pointer;
+            font-size: 19px;
+        }
+        .pre:hover{
+            background-color: orange;
+        }
+
+        .ft{
+            padding-top: 50px;
+            padding-left: 15px;
+        }
+        button:hover {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h2>Display Data</h2>
+
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Legal Residence</th>
+                <th>City</th>
+                <th>State</th>
+                <th>ZIP</th>
+                <th>Marital Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <script>
+        // Retrieve records from local storage
+        const records = JSON.parse(localStorage.getItem('records')) || [];
+
+        // Get the table body element
+        const tableBody = document.getElementById('table-body');
+
+        // Iterate through the records array and create table rows
+        records.forEach((record, index) => {
+            const row = tableBody.insertRow();
+
+            // Insert cells for each field
+            const fields = ['firstName', 'middleName', 'lastName', 'legalResidence', 'city', 'state', 'zip', 'maritalStatus'];
+            fields.forEach((field) => {
+                const cell = row.insertCell();
+                cell.textContent = record[field];
+            });
+
+            // Add a delete button
+            const deleteCell = row.insertCell();
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function() {
+                deleteRecord(index);
+            };
+            deleteCell.appendChild(deleteButton);
+        });
+
+        function deleteRecord(index) {
+            // Remove the record from the array
+            records.splice(index, 1);
+
+            // Save the updated records back to local storage
+            localStorage.setItem('records', JSON.stringify(records));
+
+            // Clear the table and re-display the data
+            tableBody.innerHTML = '';
+            records.forEach((record, index) => {
+                const row = tableBody.insertRow();
+
+                // Insert cells for each field
+                const fields = ['firstName', 'middleName', 'lastName', 'legalResidence', 'city', 'state', 'zip', 'maritalStatus'];
+                fields.forEach((field) => {
+                    const cell = row.insertCell();
+                    cell.textContent = record[field];
+                });
+
+                // Add a delete button
+                const deleteCell = row.insertCell();
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function() {
+                    deleteRecord(index);
+                };
+                deleteCell.appendChild(deleteButton);
+            });
+        }
+    </script><br>
+    <footer class="ft"><a href="./index.html"><button class="pre">Previous</button></a></footer>
+</body>
+</html>
